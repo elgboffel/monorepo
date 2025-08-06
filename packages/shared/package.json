@@ -1,0 +1,21 @@
+{
+  "name": "shared",
+  "version": "1.0.0",
+  "main": "./src/helpers.ts",
+  "types": "./src/helpers.ts",
+  "exports": {
+    ".": "./src/helpers.ts",
+    "./*": "./src/*"
+  },
+  "typesVersions": {
+    "*": {
+      "*": ["src/*"]
+    }
+  },
+  "scripts": {
+    "type-check": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}

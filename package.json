@@ -1,0 +1,17 @@
+{
+  "name": "grably-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "turbo build --filter='./apps/*'",
+    "dev": "turbo dev --filter='./apps/*'",
+    "clean": "turbo clean --filter='./apps/*'",
+    "type-check": "turbo type-check"
+  },
+  "devDependencies": {
+    "turbo": "^1.10.0",
+    "typescript": "^5.0.0",
+    "@types/node": "^20.0.0"
+  },
+  "packageManager": "pnpm@8.0.0"
+}
