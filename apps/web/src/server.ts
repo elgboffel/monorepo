@@ -104,7 +104,7 @@ app.get('/', (req, res) => {
       <li>Part of a pnpm + Turborepo monorepo</li>
     </ul>
   `;
-  
+
   res.send(generateHTML('Home - Web App', content));
 });
 
@@ -129,7 +129,7 @@ app.get('/about', (req, res) => {
     
     <p>All packages are consumed directly as TypeScript source files, with no build step required for internal packages.</p>
   `;
-  
+
   res.send(generateHTML('About - Web App', content));
 });
 
@@ -153,7 +153,7 @@ curl http://localhost:3000/api/message</code></pre>
     
     <p>Both the web app and API use the same shared package for consistent messaging and utilities.</p>
   `;
-  
+
   res.send(generateHTML('API Info - Web App', content));
 });
 
@@ -164,7 +164,7 @@ app.use((req, res) => {
     <p>The page you're looking for doesn't exist.</p>
     <p><a href="/">Go back to home</a></p>
   `;
-  
+
   res.status(404).send(generateHTML('404 - Web App', content));
 });
 

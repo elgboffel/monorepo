@@ -27,22 +27,27 @@ A minimal monorepo setup using pnpm workspaces, Turborepo, and TypeScript.
 ## Getting Started
 
 1. Install dependencies:
+
    ```bash
    pnpm install
    ```
 
 2. Build all apps (packages are used directly as TypeScript):
+
    ```bash
    pnpm build
    ```
 
 3. Run in development mode:
+
    ```bash
    pnpm dev
    ```
+
    This will start both the web app and API server.
 
 4. Run individual apps:
+
    ```bash
    # Run only the API server
    cd apps/api && pnpm dev
@@ -52,6 +57,7 @@ A minimal monorepo setup using pnpm workspaces, Turborepo, and TypeScript.
    ```
 
 5. Clean all build outputs:
+
    ```bash
    pnpm clean
    ```
@@ -63,10 +69,24 @@ A minimal monorepo setup using pnpm workspaces, Turborepo, and TypeScript.
 
 ## Commands
 
+### Development
+
 - `pnpm build` - Build all apps (packages are used directly as TypeScript)
 - `pnpm dev` - Run all apps in development mode
 - `pnpm clean` - Clean all app build outputs
 - `pnpm type-check` - Type check all TypeScript code (apps and packages)
+
+### Code Quality
+
+- `pnpm lint` - Lint all TypeScript and JavaScript files
+- `pnpm lint:fix` - Lint and automatically fix issues
+- `pnpm format` - Format all files with Prettier
+- `pnpm format:check` - Check if files are properly formatted
+
+### Dependency Management
+
+- `pnpm deps:check` - Check for dependency version mismatches across packages
+- `pnpm deps:fix` - Automatically fix dependency version mismatches
 
 ## API Endpoints
 
@@ -77,6 +97,16 @@ The Express.js API server (when running) provides the following endpoints:
 - `GET /api/message` - Returns a message from the shared package
 
 Default server runs on `http://localhost:3000`
+
+## Development Tools
+
+This monorepo includes a comprehensive set of development tools:
+
+- **Prettier** - Code formatting with consistent style
+- **ESLint** - TypeScript/JavaScript linting with recommended rules
+- **EditorConfig** - Consistent editor settings across team members
+- **Husky** - Git hooks for pre-commit quality checks
+- **Syncpack** - Ensures consistent dependency versions across packages
 
 ## Package Architecture
 

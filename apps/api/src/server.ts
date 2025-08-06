@@ -15,7 +15,7 @@ app.get('/', (req, res) => {
     message: getMessage(),
     version: getVersion(),
     date: formatDate(new Date()),
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   });
 });
 

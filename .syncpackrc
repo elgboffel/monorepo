@@ -1,0 +1,32 @@
+{
+  "versionGroups": [
+    {
+      "label": "Use workspace protocol when developing local packages",
+      "dependencies": ["shared"],
+      "dependencyTypes": ["dev", "peer", "prod"],
+      "pinVersion": "workspace:*"
+    }
+  ],
+  "semverGroups": [
+    {
+      "label": "Use exact versions for TypeScript",
+      "dependencies": ["typescript"],
+      "dependencyTypes": ["dev"],
+      "range": ""
+    }
+  ],
+  "sortAz": [
+    "contributors",
+    "dependencies",
+    "devDependencies",
+    "keywords",
+    "peerDependencies",
+    "resolutions"
+  ],
+  "sortFirst": [
+    "name",
+    "description",
+    "version",
+    "author"
+  ]
+}
