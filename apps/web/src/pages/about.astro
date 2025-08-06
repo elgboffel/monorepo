@@ -1,0 +1,164 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navigation from '../components/Navigation.astro';
+import { InfoCard } from '../components/InfoCard';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@project/ui/components/card';
+---
+
+<Layout title="About - Grably Monorepo">
+  <Navigation />
+
+  <main class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+    <div class="mb-8">
+      <h1 class="text-4xl font-bold text-foreground mb-4">
+        About This Application
+      </h1>
+      <p class="text-xl text-muted-foreground">
+        Learn about the monorepo architecture and technology choices.
+      </p>
+    </div>
+
+    <div class="space-y-6">
+      <Card>
+        <CardHeader>
+          <CardTitle>Monorepo Setup</CardTitle>
+          <CardDescription>
+            This application is part of a minimal monorepo setup using modern
+            tools
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <h4 class="font-semibold mb-3">Package Management</h4>
+              <ul class="space-y-2">
+                <li>
+                  <strong>pnpm workspaces</strong> - For efficient package management
+                </li>
+                <li>
+                  <strong>Turborepo</strong> - For build orchestration and caching
+                </li>
+                <li>
+                  <strong>Syncpack</strong> - For dependency version consistency
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="font-semibold mb-3">Development Tools</h4>
+              <ul class="space-y-2">
+                <li>
+                  <strong>TypeScript</strong> - For type safety across the monorepo
+                </li>
+                <li>
+                  <strong>ESLint</strong> - For code quality and consistency
+                </li>
+                <li>
+                  <strong>Prettier</strong> - For automated code formatting
+                </li>
+                <li>
+                  <strong>Husky</strong> - For git hooks and quality gates
+                </li>
+              </ul>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Architecture Overview</CardTitle>
+          <CardDescription>
+            How the monorepo is structured and organized
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div class="space-y-4">
+            <div>
+              <h4 class="font-semibold mb-2">Applications (apps/)</h4>
+              <ul class="space-y-1 ml-4">
+                <li>
+                  <code class="bg-muted px-2 py-1 rounded">apps/web</code> - This
+                  Astro web application
+                </li>
+                <li>
+                  <code class="bg-muted px-2 py-1 rounded">apps/api</code> - Express.js
+                  REST API server
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="font-semibold mb-2">
+                @project/shared Packages (packages/)
+              </h4>
+              <ul class="space-y-1 ml-4">
+                <li>
+                  <code class="bg-muted px-2 py-1 rounded"
+                    >packages/@project/shared</code
+                  > - Common utilities and functions
+                </li>
+                <li>
+                  <code class="bg-muted px-2 py-1 rounded">packages/ui</code> - React
+                  components with shadcn/ui
+                </li>
+                <li>
+                  <code class="bg-muted px-2 py-1 rounded"
+                    >packages/tailwind-config</code
+                  > - @project/shared Tailwind configuration
+                </li>
+              </ul>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Key Benefits</CardTitle>
+          <CardDescription>
+            Advantages of this monorepo approach
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <ul class="space-y-2">
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-primary rounded-full mr-3 mt-2"></span>
+              <div>
+                <strong>Code Sharing:</strong> Common utilities and components @project/shared
+                across applications
+              </div>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-primary rounded-full mr-3 mt-2"></span>
+              <div>
+                <strong>Type Safety:</strong> TypeScript ensures consistency across
+                package boundaries
+              </div>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-primary rounded-full mr-3 mt-2"></span>
+              <div>
+                <strong>Efficient Builds:</strong> Turborepo provides intelligent
+                caching and parallelization
+              </div>
+            </li>
+            <li class="flex items-start">
+              <span class="w-2 h-2 bg-primary rounded-full mr-3 mt-2"></span>
+              <div>
+                <strong>Consistent Tooling:</strong> @project/shared configurations
+                for linting, formatting, and styling
+              </div>
+            </li>
+          </ul>
+        </CardContent>
+      </Card>
+    </div>
+
+    <InfoCard client:load />
+  </main>
+</Layout>

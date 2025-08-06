@@ -3,20 +3,26 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "tsc",
-    "dev": "tsx src/server.ts",
-    "start": "node dist/server.js",
+    "build": "astro build",
+    "dev": "astro dev",
+    "start": "astro preview",
     "clean": "rm -rf dist",
-    "type-check": "tsc --noEmit"
+    "type-check": "astro check"
   },
   "dependencies": {
-    "shared": "workspace:*",
-    "express": "^4.18.0"
+    "@astrojs/react": "4.3.0",
+    "@project/shared": "workspace:*",
+    "@project/ui": "workspace:*",
+    "astro": "5.12.8",
+    "react": "19.1.1",
+    "react-dom": "19.1.1",
+    "tailwindcss": "4.1.11"
   },
   "devDependencies": {
-    "typescript": "5.0.0",
-    "@types/node": "^20.0.0",
-    "@types/express": "^4.17.0",
-    "tsx": "^4.0.0"
+    "@project/styles-config": "workspace:*",
+    "@types/node": "24.2.0",
+    "@types/react": "19.1.9",
+    "@types/react-dom": "19.1.7",
+    "typescript": "5.9.2"
   }
 }

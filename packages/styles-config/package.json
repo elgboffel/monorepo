@@ -1,0 +1,11 @@
+{
+  "name": "@project/styles-config",
+  "version": "1.0.0",
+  "main": "tailwind.config.mjs",
+  "files": [
+    "tailwind.config.mjs"
+  ],
+  "devDependencies": {
+    "tailwindcss": "4.1.11"
+  }
+}

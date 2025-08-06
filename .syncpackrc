@@ -2,9 +2,15 @@
   "versionGroups": [
     {
       "label": "Use workspace protocol when developing local packages",
-      "dependencies": ["shared"],
+      "dependencies": ["@project/**"],
       "dependencyTypes": ["dev", "peer", "prod"],
       "pinVersion": "workspace:*"
+    },
+    {
+      "label": "Ignore internal workspace packages from version checks",
+      "dependencies": ["@project/**"],
+      "dependencyTypes": ["dev", "peer", "prod"],
+      "isIgnored": true
     }
   ],
   "semverGroups": [
