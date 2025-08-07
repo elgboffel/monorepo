@@ -1,0 +1,28 @@
+{
+  "name": "@project/database",
+  "version": "1.0.0",
+  "exports": {
+    "./*": "./src/*"
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "src/*"
+      ]
+    }
+  },
+  "scripts": {
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@mikro-orm/core": "^6.4.3",
+    "@mikro-orm/postgresql": "^6.4.3",
+    "@mikro-orm/mysql": "^6.4.3",
+    "@mikro-orm/sqlite": "^6.4.3",
+    "@mikro-orm/migrations": "^6.4.3",
+    "@mikro-orm/reflection": "^6.4.3"
+  },
+  "devDependencies": {
+    "typescript": "5.9.2"
+  }
+}
