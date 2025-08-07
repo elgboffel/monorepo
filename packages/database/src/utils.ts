@@ -4,8 +4,8 @@ import {
   AnyEntity,
   FilterQuery,
   FindOptions,
-} from '@mikro-orm/core';
-import { getDatabase } from './connection.js';
+} from "@mikro-orm/core";
+import { getDatabase } from "./connection.js";
 
 /**
  * Generic repository wrapper with common CRUD operations
@@ -65,13 +65,13 @@ export class BaseRepository<T extends AnyEntity> {
 /**
  * Pagination utilities
  */
-export interface PaginationOptions {
+export type PaginationOptions = {
   page?: number;
   limit?: number;
   offset?: number;
-}
+};
 
-export interface PaginatedResult<T> {
+export type PaginatedResult<T> = {
   data: T[];
   total: number;
   page: number;
@@ -79,7 +79,7 @@ export interface PaginatedResult<T> {
   totalPages: number;
   hasNext: boolean;
   hasPrev: boolean;
-}
+};
 
 export async function paginate<T extends AnyEntity>(
   repository: EntityRepository<T>,

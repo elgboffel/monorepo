@@ -1,5 +1,5 @@
 export function formatDate(date: Date): string {
-  return date.toISOString().split('T')[0];
+  return date.toISOString().split("T")[0];
 }
 
 export function capitalize(str: string): string {
@@ -7,6 +7,6 @@ export function capitalize(str: string): string {
 }
 
 export const constants = {
-  APP_NAME: 'Grably Monorepo',
-  VERSION: '1.0.0',
+  APP_NAME: "Grably Monorepo",
+  VERSION: "1.0.0",
 } as const;

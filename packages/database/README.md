@@ -4,7 +4,7 @@ A shared database package for the Grably monorepo using MikroORM. This package p
 
 ## Features
 
-- 🔌 **Multi-database support**: PostgreSQL, MySQL, SQLite
+- 🔌 **Multi-database support**: PostgreSQL, SQLite
 - 🏗️ **Base entities** with common fields (id, createdAt, updatedAt)
 - 🔄 **Connection management** with singleton pattern
 - 🛠️ **Utility functions** for common operations
@@ -44,21 +44,41 @@ NODE_ENV=development
 ### 2. Initialize Database Connection
 
 ```typescript
-import { initializeDatabase, createConfigFromEnv } from '@project/database';
+import {
+  initializeDatabase,
+  createConfigFromEnv,
+  createPostgreSQLConfig,
+  createMikroOrmConfigFromEnv,
+  Options,
+} from '@project/database';
 
-// Initialize with environment variables
+// Method 1: Initialize with environment variables (simplified config)
 const orm = await initializeDatabase(createConfigFromEnv());
 
-// Or with custom config
-const orm = await initializeDatabase({
-  type: 'postgresql',
+// Method 2: Use database-specific helpers
+const orm = await initializeDatabase(
+  createPostgreSQLConfig({
+    dbName: 'grably',
+    debug: true,
+  })
+);
+
+// Method 3: Use full MikroORM configuration directly
+const orm = await initializeDatabase(createMikroOrmConfigFromEnv());
+
+// Method 4: Use native MikroORM Options (full control)
+const config: Options = {
+  driver: PostgreSqlDriver,
   host: 'localhost',
   port: 5432,
   user: 'postgres',
   password: 'postgres',
   dbName: 'grably',
+  entities: ['./dist/**/*.entity.js'],
+  entitiesTs: ['./src/**/*.entity.ts'],
   debug: true,
-});
+};
+const orm = await initializeDatabase(config);
 ```
 
 ### 3. Create Entities
@@ -110,8 +130,12 @@ const user = await userRepo.createUser({
 
 ### Configuration
 
-- `createConfigFromEnv()` - Create config from environment variables
-- `createMikroOrmConfig(config)` - Create MikroORM options from config
+- `createConfigFromEnv()` - Create simplified config from environment variables
+- `createMikroOrmConfig(config)` - Convert simplified config to MikroORM Options
+- `createMikroOrmConfigFromEnv()` - Create MikroORM Options directly from environment
+- `createPostgreSQLConfig(overrides?)` - Create PostgreSQL configuration with defaults
+
+- `createSQLiteConfig(dbPath?, overrides?)` - Create SQLite configuration with defaults
 
 ### Connection Management
 
@@ -208,7 +232,6 @@ To set up migrations in your app:
 ## Supported Databases
 
 - **PostgreSQL** (recommended for production)
-- **MySQL/MariaDB**
 - **SQLite** (good for development/testing)
 
 ## Best Practices

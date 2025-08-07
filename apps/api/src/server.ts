@@ -1,6 +1,6 @@
-import express from 'express';
-import { getMessage, getVersion } from '@project/shared/helpers';
-import { formatDate, constants } from '@project/shared/utils';
+import express from "express";
+import { getMessage, getVersion } from "@project/shared/helpers";
+import { formatDate, constants } from "@project/shared/utils";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 
 // Routes
-app.get('/', (req, res) => {
+app.get("/", (req, res) => {
   res.json({
     app: constants.APP_NAME,
     message: getMessage(),
@@ -19,11 +19,11 @@ app.get('/', (req, res) => {
   });
 });
 
-app.get('/health', (req, res) => {
-  res.json({ status: 'ok', uptime: process.uptime() });
+app.get("/health", (req, res) => {
+  res.json({ status: "ok", uptime: process.uptime() });
 });
 
-app.get('/api/message', (req, res) => {
+app.get("/api/message", (req, res) => {
   res.json({ message: getMessage() });
 });
 

@@ -4,9 +4,9 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@project/ui/components/card';
-import { formatDate } from '@project/shared/utils';
-import { getMessage, getVersion } from '@project/shared/helpers';
+} from "@project/ui/components/card";
+import { formatDate } from "@project/shared/utils";
+import { getMessage, getVersion } from "@project/shared/helpers";
 
 export function InfoCard() {
   return (

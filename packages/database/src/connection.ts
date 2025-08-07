@@ -1,23 +1,28 @@
-import { MikroORM, EntityManager, RequestContext } from '@mikro-orm/core';
-import { createMikroOrmConfig, DatabaseConfig } from './config.js';
+import {
+  MikroORM,
+  EntityManager,
+  RequestContext,
+  Options,
+} from "@mikro-orm/core";
+import { createMikroOrmConfig, DatabaseConfig } from "./config.js";
 
 export class DatabaseConnection {
   private static instance: DatabaseConnection | null = null;
   private orm: MikroORM | null = null;
-  private config: DatabaseConfig;
+  private config: DatabaseConfig | Options;
 
-  private constructor(config: DatabaseConfig) {
+  private constructor(config: DatabaseConfig | Options) {
     this.config = config;
   }
 
   /**
    * Get or create a singleton instance of DatabaseConnection
    */
-  static getInstance(config?: DatabaseConfig): DatabaseConnection {
+  static getInstance(config?: DatabaseConfig | Options): DatabaseConnection {
     if (!DatabaseConnection.instance) {
       if (!config) {
         throw new Error(
-          'DatabaseConnection config is required for first initialization'
+          "DatabaseConnection config is required for first initialization"
         );
       }
       DatabaseConnection.instance = new DatabaseConnection(config);
@@ -34,15 +39,21 @@ export class DatabaseConnection {
     }
 
     try {
-      const mikroOrmConfig = createMikroOrmConfig(this.config);
+      // If config is already a full MikroORM Options object, use it directly
+      // Otherwise, convert our simplified DatabaseConfig to Options
+      const mikroOrmConfig =
+        "driver" in this.config
+          ? (this.config as Options)
+          : createMikroOrmConfig(this.config as DatabaseConfig);
+
       this.orm = await MikroORM.init(mikroOrmConfig);
 
-      console.log(
-        `✅ Connected to ${this.config.type} database: ${this.config.dbName}`
-      );
+      const dbName = mikroOrmConfig.dbName || "database";
+      const dbType = "type" in this.config ? this.config.type : "unknown";
+      console.log(`✅ Connected to ${dbType} database: ${dbName}`);
       return this.orm;
     } catch (error) {
-      console.error('❌ Failed to connect to database:', error);
+      console.error("❌ Failed to connect to database:", error);
       throw error;
     }
   }
@@ -52,7 +63,7 @@ export class DatabaseConnection {
    */
   getORM(): MikroORM {
     if (!this.orm) {
-      throw new Error('Database not connected. Call connect() first.');
+      throw new Error("Database not connected. Call connect() first.");
     }
     return this.orm;
   }
@@ -98,7 +109,7 @@ export class DatabaseConnection {
     if (this.orm) {
       await this.orm.close();
       this.orm = null;
-      console.log('🔌 Database connection closed');
+      console.log("🔌 Database connection closed");
     }
   }
 
@@ -127,7 +138,7 @@ export class DatabaseConnection {
 
 // Convenience functions for common operations
 export async function initializeDatabase(
-  config: DatabaseConfig
+  config: DatabaseConfig | Options
 ): Promise<MikroORM> {
   const connection = DatabaseConnection.getInstance(config);
   return connection.connect();
