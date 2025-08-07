@@ -1,0 +1,16 @@
+# Development overrides for Grably
+# This file is automatically loaded when running `docker-compose up`
+# It contains development-specific configurations
+
+services:
+  postgres:
+    # Development-specific postgres settings
+    environment:
+      # Keep the same dev password for local development
+      POSTGRES_PASSWORD: grably_dev_password
+    # You can add development-specific volumes or configs here
+
+  redis:
+    # Development-specific redis settings
+    # You can add development-specific configs here
+    command: redis-server --appendonly yes --loglevel verbose

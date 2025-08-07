@@ -1,0 +1,8 @@
+# Main Docker Compose file for Grably
+# This file includes all service configurations
+include:
+  - docker-compose.db.yml
+  - docker-compose.cache.yml
+# You can override settings for different environments:
+# Development: docker-compose -f .docker/docker-compose.yml up
+# Production: docker-compose -f .docker/docker-compose.yml -f .docker/docker-compose.prod.yml up

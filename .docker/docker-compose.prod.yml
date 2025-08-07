@@ -1,0 +1,41 @@
+# Production overrides for Grably
+# Use with: docker-compose -f .docker/docker-compose.yml -f .docker/docker-compose.prod.yml up
+
+services:
+  postgres:
+    # Production postgres settings
+    environment:
+      # Use environment variables for production secrets
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-grably_secure_password}
+      POSTGRES_DB: ${POSTGRES_DB:-grably}
+      POSTGRES_USER: ${POSTGRES_USER:-grably}
+    # Remove port exposure for security (only accessible within Docker network)
+    ports: []
+    # Production-specific resource limits
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: '0.5'
+        reservations:
+          memory: 512M
+          cpus: '0.25'
+
+  redis:
+    # Production redis settings
+    environment:
+      # Use environment variables for production
+      REDIS_PASSWORD: ${REDIS_PASSWORD:-}
+    # Remove port exposure for security
+    ports: []
+    # Production command without verbose logging
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-}
+    # Production-specific resource limits
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '0.25'
+        reservations:
+          memory: 256M
+          cpus: '0.1'
