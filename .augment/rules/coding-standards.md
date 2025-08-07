@@ -103,7 +103,7 @@ Key ESLint rules enforced across the monorepo:
 
 ```
 packages/
-├── shared/           # Shared utilities and types
+├── common/          # Common utilities and types
 ├── ui/              # React UI components
 ├── database/        # Database utilities and entities
 └── styles-config/   # Tailwind CSS configuration

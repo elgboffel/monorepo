@@ -1,5 +1,5 @@
 {
-  "name": "@project/shared",
+  "name": "@project/common",
   "version": "1.0.0",
   "exports": {
     "./*": "./src/*"

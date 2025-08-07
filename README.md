@@ -119,10 +119,10 @@ This monorepo includes a comprehensive set of development tools:
 
 ```typescript
 // Import from main helpers file
-import { getMessage } from "shared";
+import { getMessage } from "common";
 
 // Import from specific files
-import { formatDate, constants } from "shared/utils";
+import { formatDate, constants } from "common/utils";
 ```
 
 ## Adding New Packages

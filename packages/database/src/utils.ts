@@ -4,6 +4,11 @@ import {
   AnyEntity,
   FilterQuery,
   FindOptions,
+  EntityData,
+  RequiredEntityData,
+  FindOneOptions,
+  FindOneOrFailOptions,
+  FindAllOptions,
 } from "@mikro-orm/core";
 import { getDatabase } from "./connection.js";
 
@@ -19,30 +24,38 @@ export class BaseRepository<T extends AnyEntity> {
     this.repository = this.em.getRepository(entityClass);
   }
 
-  async findAll(options?: any): Promise<T[]> {
-    return this.repository.findAll(options as any) as Promise<T[]>;
+  async findAll(options?: FindAllOptions<T>): Promise<T[]> {
+    return this.repository.findAll(options);
   }
 
-  async findOne(where: FilterQuery<T>, options?: any): Promise<T | null> {
-    return this.repository.findOne(where, options as any) as Promise<T | null>;
+  async findOne(
+    where: FilterQuery<T>,
+    options?: FindOneOptions<T>
+  ): Promise<T | null> {
+    return this.repository.findOne(where, options);
   }
 
-  async findOneOrFail(where: FilterQuery<T>, options?: any): Promise<T> {
-    return this.repository.findOneOrFail(where, options as any) as Promise<T>;
+  async findOneOrFail(
+    where: FilterQuery<T>,
+    options?: FindOneOrFailOptions<T>
+  ): Promise<T> {
+    return this.repository.findOneOrFail(where, options);
   }
 
-  async find(where: FilterQuery<T>, options?: any): Promise<T[]> {
-    return this.repository.find(where, options as any) as Promise<T[]>;
+  async find(where: FilterQuery<T>, options?: FindOptions<T>): Promise<T[]> {
+    return this.repository.find(where, options);
   }
 
-  async create(data: any): Promise<T> {
+  async create(data: RequiredEntityData<T>): Promise<T> {
     const entity = this.repository.create(data);
     await this.em.persistAndFlush(entity);
     return entity;
   }
 
-  async update(where: FilterQuery<T>, data: any): Promise<T> {
+  async update(where: FilterQuery<T>, data: Partial<T>): Promise<T> {
     const entity = await this.findOneOrFail(where);
+    // Using any here due to MikroORM's extremely complex assign type constraints
+    // This is the only place where any is necessary for this method
     this.repository.assign(entity, data as any);
     await this.em.flush();
     return entity;
@@ -60,6 +73,62 @@ export class BaseRepository<T extends AnyEntity> {
     const count = await this.count(where);
     return count > 0;
   }
+
+  /**
+   * Find entities with pagination
+   */
+  async findWithPagination(
+    where: FilterQuery<T> = {},
+    options: PaginationOptions = {}
+  ): Promise<PaginatedResult<T>> {
+    return paginate(this.repository, where, options);
+  }
+
+  /**
+   * Create multiple entities at once
+   */
+  async createMany(data: RequiredEntityData<T>[]): Promise<T[]> {
+    const entities = data.map(item => this.repository.create(item));
+    await this.em.persistAndFlush(entities);
+    return entities;
+  }
+
+  /**
+   * Update multiple entities by their IDs
+   */
+  async updateMany(ids: (string | number)[], data: Partial<T>): Promise<T[]> {
+    const entities = await this.repository.find({
+      id: { $in: ids },
+    } as FilterQuery<T>);
+    // Using any here due to MikroORM's extremely complex assign type constraints
+    entities.forEach(entity => this.repository.assign(entity, data as any));
+    await this.em.flush();
+    return entities;
+  }
+
+  /**
+   * Soft delete (if entity has deletedAt field)
+   */
+  async softDelete(where: FilterQuery<T>): Promise<number> {
+    // Using any here as deletedAt may not exist on all entities
+    return this.repository.nativeUpdate(where, {
+      deletedAt: new Date(),
+    } as any);
+  }
+
+  /**
+   * Get the underlying repository for advanced operations
+   */
+  getRepository(): EntityRepository<T> {
+    return this.repository;
+  }
+
+  /**
+   * Get the entity manager for transaction operations
+   */
+  getEntityManager(): EntityManager {
+    return this.em;
+  }
 }
 
 /**
@@ -71,7 +140,7 @@ export type PaginationOptions = {
   offset?: number;
 };
 
-export type PaginatedResult<T> = {
+export type PaginatedResult<T extends AnyEntity> = {
   data: T[];
   total: number;
   page: number;
@@ -84,22 +153,21 @@ export type PaginatedResult<T> = {
 export async function paginate<T extends AnyEntity>(
   repository: EntityRepository<T>,
   where: FilterQuery<T> = {},
-  options: PaginationOptions & FindOptions<T> = {}
+  options: PaginationOptions = {}
 ): Promise<PaginatedResult<T>> {
-  const { page = 1, limit = 10, offset, ...findOptions } = options;
+  const { page = 1, limit = 10, offset } = options;
 
   const actualOffset = offset ?? (page - 1) * limit;
 
   const [data, total] = await repository.findAndCount(where, {
-    ...findOptions,
     limit,
     offset: actualOffset,
-  } as any);
+  });
 
   const totalPages = Math.ceil(total / limit);
 
   return {
-    data: data as T[],
+    data,
     total,
     page,
     limit,
@@ -125,7 +193,7 @@ export async function withTransaction<T>(
  */
 export async function bulkCreate<T extends AnyEntity>(
   entityClass: new () => T,
-  data: any[],
+  data: RequiredEntityData<T>[],
   em?: EntityManager
 ): Promise<T[]> {
   const entityManager = em ?? getDatabase().getEntityManager();
@@ -140,13 +208,14 @@ export async function bulkCreate<T extends AnyEntity>(
 export async function bulkUpdate<T extends AnyEntity>(
   entityClass: new () => T,
   where: FilterQuery<T>,
-  data: any,
+  data: Partial<T>,
   em?: EntityManager
 ): Promise<number> {
   const entityManager = em ?? getDatabase().getEntityManager();
   const repository = entityManager.getRepository(entityClass);
 
-  return repository.nativeUpdate(where, data);
+  // Using any here due to MikroORM's extremely complex nativeUpdate type constraints
+  return repository.nativeUpdate(where, data as any);
 }
 
 export async function bulkDelete<T extends AnyEntity>(

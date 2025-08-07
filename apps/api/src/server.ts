@@ -1,6 +1,6 @@
 import express from "express";
-import { getMessage, getVersion } from "@project/shared/helpers";
-import { formatDate, constants } from "@project/shared/utils";
+import { getMessage, getVersion } from "@project/common/helpers";
+import { formatDate, constants } from "@project/common/utils";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -30,5 +30,5 @@ app.get("/api/message", (req, res) => {
 // Start server
 app.listen(PORT, () => {
   console.log(`🚀 API server running on http://localhost:${PORT}`);
-  console.log(`📦 Using @project/shared package: ${getMessage()}`);
+  console.log(`📦 Using @project/common package: ${getMessage()}`);
 });

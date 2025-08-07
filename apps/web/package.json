@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@astrojs/react": "4.3.0",
-    "@project/shared": "workspace:*",
+    "@project/common": "workspace:*",
     "@project/ui": "workspace:*",
     "astro": "5.12.8",
     "react": "19.1.1",

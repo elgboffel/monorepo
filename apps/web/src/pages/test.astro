@@ -1,6 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { getMessage } from "@project/shared/helpers";
+import { getMessage } from "@project/common/helpers";
 ---
 
 <Layout title="Test - monorepo Monorepo">
@@ -9,6 +9,6 @@ import { getMessage } from "@project/shared/helpers";
     <p class="text-xl mb-4">
       This is a simple test page to verify Astro is working.
     </p>
-    <p class="text-lg">Message from @project/shared package: {getMessage()}</p>
+    <p class="text-lg">Message from @project/common package: {getMessage()}</p>
   </main>
 </Layout>

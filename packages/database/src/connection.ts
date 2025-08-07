@@ -48,7 +48,7 @@ export class DatabaseConnection {
 
       this.orm = await MikroORM.init(mikroOrmConfig);
 
-      const dbName = mikroOrmConfig.dbName || "database";
+      const dbName = mikroOrmConfig.dbName;
       const dbType = "type" in this.config ? this.config.type : "unknown";
       console.log(`✅ Connected to ${dbType} database: ${dbName}`);
       return this.orm;

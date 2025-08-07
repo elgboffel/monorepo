@@ -55,10 +55,10 @@ export function createMikroOrmConfig(config: DatabaseConfig): Options {
       return {
         ...baseConfig,
         driver: PostgreSqlDriver,
-        host: config.host ?? "localhost",
-        port: config.port ?? 5432,
-        user: config.user ?? "postgres",
-        password: config.password ?? "postgres",
+        host: config.host,
+        port: config.port,
+        user: config.user,
+        password: config.password,
         dbName: config.dbName,
       } as Options;
 
