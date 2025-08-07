@@ -1,6 +1,6 @@
-# Grably Monorepo Coding Standards
+# monorepo Monorepo Coding Standards
 
-This document outlines the coding standards and conventions for the Grably monorepo to ensure consistency, maintainability, and code quality across all packages and applications.
+This document outlines the coding standards and conventions for the monorepo monorepo to ensure consistency, maintainability, and code quality across all packages and applications.
 
 ## TypeScript Standards
 

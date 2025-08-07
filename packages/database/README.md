@@ -1,6 +1,6 @@
 # @project/database
 
-A shared database package for the Grably monorepo using MikroORM. This package provides database connection management, base entities, and common utilities that can be shared across all applications in the monorepo.
+A shared database package for the monorepo monorepo using MikroORM. This package provides database connection management, base entities, and common utilities that can be shared across all applications in the monorepo.
 
 ## Features
 
@@ -37,7 +37,7 @@ DB_HOST=localhost
 DB_PORT=5432
 DB_USER=postgres
 DB_PASSWORD=postgres
-DB_NAME=grably
+DB_NAME=monorepo
 NODE_ENV=development
 ```
 
@@ -50,7 +50,7 @@ import {
   createPostgreSQLConfig,
   createMikroOrmConfigFromEnv,
   Options,
-} from '@project/database';
+} from "@project/database";
 
 // Method 1: Initialize with environment variables (simplified config)
 const orm = await initializeDatabase(createConfigFromEnv());
@@ -58,7 +58,7 @@ const orm = await initializeDatabase(createConfigFromEnv());
 // Method 2: Use database-specific helpers
 const orm = await initializeDatabase(
   createPostgreSQLConfig({
-    dbName: 'grably',
+    dbName: "monorepo",
     debug: true,
   })
 );
@@ -69,13 +69,13 @@ const orm = await initializeDatabase(createMikroOrmConfigFromEnv());
 // Method 4: Use native MikroORM Options (full control)
 const config: Options = {
   driver: PostgreSqlDriver,
-  host: 'localhost',
+  host: "localhost",
   port: 5432,
-  user: 'postgres',
-  password: 'postgres',
-  dbName: 'grably',
-  entities: ['./dist/**/*.entity.js'],
-  entitiesTs: ['./src/**/*.entity.ts'],
+  user: "postgres",
+  password: "postgres",
+  dbName: "monorepo",
+  entities: ["./dist/**/*.entity.js"],
+  entitiesTs: ["./src/**/*.entity.ts"],
   debug: true,
 };
 const orm = await initializeDatabase(config);
@@ -84,7 +84,7 @@ const orm = await initializeDatabase(config);
 ### 3. Create Entities
 
 ```typescript
-import { Entity, Property, BaseEntity } from '@project/database';
+import { Entity, Property, BaseEntity } from "@project/database";
 
 @Entity()
 export class User extends BaseEntity {
@@ -102,7 +102,7 @@ export class User extends BaseEntity {
 ### 4. Use Repository Pattern
 
 ```typescript
-import { BaseRepository, getEntityManager } from '@project/database';
+import { BaseRepository, getEntityManager } from "@project/database";
 
 class UserRepository extends BaseRepository<User> {
   constructor() {
@@ -121,8 +121,8 @@ class UserRepository extends BaseRepository<User> {
 // Usage
 const userRepo = new UserRepository();
 const user = await userRepo.createUser({
-  name: 'John Doe',
-  email: 'john@example.com',
+  name: "John Doe",
+  email: "john@example.com",
 });
 ```
 
@@ -162,7 +162,7 @@ const user = await userRepo.createUser({
 
 ```typescript
 // src/database.ts
-import { initializeDatabase, createConfigFromEnv } from '@project/database';
+import { initializeDatabase, createConfigFromEnv } from "@project/database";
 
 export async function setupDatabase() {
   const orm = await initializeDatabase(createConfigFromEnv());
@@ -170,7 +170,7 @@ export async function setupDatabase() {
 }
 
 // src/entities/user.entity.ts
-import { Entity, Property, BaseEntity } from '@project/database';
+import { Entity, Property, BaseEntity } from "@project/database";
 
 @Entity()
 export class User extends BaseEntity {
@@ -182,8 +182,8 @@ export class User extends BaseEntity {
 }
 
 // src/repositories/user.repository.ts
-import { BaseRepository } from '@project/database';
-import { User } from '../entities/user.entity.js';
+import { BaseRepository } from "@project/database";
+import { User } from "../entities/user.entity.js";
 
 export class UserRepository extends BaseRepository<User> {
   constructor() {
@@ -200,8 +200,8 @@ export class UserRepository extends BaseRepository<User> {
 
 ```typescript
 // src/lib/database.ts
-import { getEntityManager } from '@project/database';
-import { User } from './entities/user.entity.js';
+import { getEntityManager } from "@project/database";
+import { User } from "./entities/user.entity.js";
 
 export async function getUsers() {
   const em = getEntityManager();

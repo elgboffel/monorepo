@@ -1,4 +1,4 @@
-# Development overrides for Grably
+# Development overrides for monorepo
 # This file is automatically loaded when running `docker-compose up`
 # It contains development-specific configurations
 
@@ -7,7 +7,7 @@ services:
     # Development-specific postgres settings
     environment:
       # Keep the same dev password for local development
-      POSTGRES_PASSWORD: grably_dev_password
+      POSTGRES_PASSWORD: monorepo_dev_password
     # You can add development-specific volumes or configs here
 
   redis:

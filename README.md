@@ -1,4 +1,4 @@
-# Grably Monorepo
+# monorepo Monorepo
 
 A minimal monorepo setup using pnpm workspaces, Turborepo, and TypeScript.
 
@@ -119,10 +119,10 @@ This monorepo includes a comprehensive set of development tools:
 
 ```typescript
 // Import from main helpers file
-import { getMessage } from 'shared';
+import { getMessage } from "shared";
 
 // Import from specific files
-import { formatDate, constants } from 'shared/utils';
+import { formatDate, constants } from "shared/utils";
 ```
 
 ## Adding New Packages

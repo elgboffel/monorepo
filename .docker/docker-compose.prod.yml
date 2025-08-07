@@ -1,4 +1,4 @@
-# Production overrides for Grably
+# Production overrides for monorepo
 # Use with: docker-compose -f .docker/docker-compose.yml -f .docker/docker-compose.prod.yml up
 
 services:
@@ -6,9 +6,9 @@ services:
     # Production postgres settings
     environment:
       # Use environment variables for production secrets
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-grably_secure_password}
-      POSTGRES_DB: ${POSTGRES_DB:-grably}
-      POSTGRES_USER: ${POSTGRES_USER:-grably}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-monorepo_secure_password}
+      POSTGRES_DB: ${POSTGRES_DB:-monorepo}
+      POSTGRES_USER: ${POSTGRES_USER:-monorepo}
     # Remove port exposure for security (only accessible within Docker network)
     ports: []
     # Production-specific resource limits
@@ -16,10 +16,10 @@ services:
       resources:
         limits:
           memory: 1G
-          cpus: '0.5'
+          cpus: "0.5"
         reservations:
           memory: 512M
-          cpus: '0.25'
+          cpus: "0.25"
 
   redis:
     # Production redis settings
@@ -35,7 +35,7 @@ services:
       resources:
         limits:
           memory: 512M
-          cpus: '0.25'
+          cpus: "0.25"
         reservations:
           memory: 256M
-          cpus: '0.1'
+          cpus: "0.1"

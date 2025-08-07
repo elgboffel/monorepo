@@ -1,4 +1,4 @@
-# Main Docker Compose file for Grably
+# Main Docker Compose file for monorepo
 # This file includes all service configurations
 include:
   - docker-compose.db.yml

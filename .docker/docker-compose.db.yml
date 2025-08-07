@@ -1,19 +1,19 @@
-# Database services for Grably
+# Database services for monorepo
 services:
   postgres:
     image: postgres:16-alpine
-    container_name: grably-postgres
+    container_name: monorepo-postgres
     restart: unless-stopped
     environment:
-      POSTGRES_DB: grably
-      POSTGRES_USER: grably
-      POSTGRES_PASSWORD: grably_dev_password
+      POSTGRES_DB: monorepo
+      POSTGRES_USER: monorepo
+      POSTGRES_PASSWORD: monorepo_dev_password
     ports:
-      - '5432:5432'
+      - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ['CMD-SHELL', 'pg_isready -U grably -d grably']
+      test: ["CMD-SHELL", "pg_isready -U monorepo -d monorepo"]
       interval: 10s
       timeout: 5s
       retries: 5

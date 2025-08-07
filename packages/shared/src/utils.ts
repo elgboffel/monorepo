@@ -7,6 +7,6 @@ export function capitalize(str: string): string {
 }
 
 export const constants = {
-  APP_NAME: "Grably Monorepo",
+  APP_NAME: "monorepo Monorepo",
   VERSION: "1.0.0",
 } as const;
